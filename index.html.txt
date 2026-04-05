@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SONABIO — Cosmétique Naturelle d'Exception</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sage: #7a8c6e;
+      --sage-light: #a5b596;
+      --sage-pale: #e8ede4;
+      --beige: #f5efe6;
+      --beige-dark: #e8ddd0;
+      --sand: #c9b99a;
+      --sand-deep: #a8926f;
+      --white: #fdfcfa;
+      --ink: #2a2520;
+      --ink-light: #5a5248;
+      --cream: #f9f5ef;
+      --gold: #b8975a;
+      --gold-light: #d4b882;
+      --radius: 2px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--beige); }
+    ::-webkit-scrollbar-thumb { background: var(--sand); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 72px;
+      background: rgba(253, 252, 250, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201, 185, 154, 0.25);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 32px rgba(42,37,32,0.08); }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--sage); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-light);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 400;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.25s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--sage);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--sage);
+      color: var(--white) !important;
+      padding: 0.55rem 1.4rem !important;
+      border-radius: var(--radius);
+      letter-spacing: 0.1em !important;
+      transition: background 0.25s !important;
+    }
+    .nav-cta:hover { background: var(--sage-light) !important; }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--ink);
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(6rem, 10vw, 10rem) clamp(2rem, 6vw, 6rem) 4rem;
+      background: var(--cream);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s 0.4s ease forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--sage);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--ink-light);
+      max-width: 400px;
+      line-height: 1.8;
+      margin-bottom: 2.8rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s 0.6s ease forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s 0.8s ease forwards;
+    }
+
+    .btn-primary {
+      background: var(--sage);
+      color: var(--white);
+      border: none;
+      padding: 0.9rem 2.2rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 400;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: var(--radius);
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--sage-light); transform: translateY(-1px); }
+
+    .btn-ghost {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: gap 0.25s, color 0.25s;
+    }
+    .btn-ghost:hover { gap: 1rem; color: var(--sage); }
+    .btn-ghost span { font-size: 1.1rem; }
+
+    .hero-right {
+      position: relative;
+      background: var(--sage-pale);
+      overflow: hidden;
+    }
+    .hero-right-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 70% 40%, rgba(122,140,110,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,185,154,0.2) 0%, transparent 60%);
+    }
+    .hero-illustration {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* SVG botanical illustration */
+    .botanical {
+      width: min(480px, 90%);
+      opacity: 0;
+      animation: fadeIn 1.2s 0.5s ease forwards;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: var(--sage);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      animation: spin 18s linear infinite;
+    }
+    .hero-badge-inner {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: block;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--ink);
+      padding: 1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-track span {
+      display: inline-block;
+      color: var(--beige-dark);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0 2.5rem;
+    }
+    .marquee-track span.dot {
+      color: var(--gold);
+      padding: 0;
+      letter-spacing: 0;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem); }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--sage); }
+
+    /* ── WHY ── */
+    #pourquoi {
+      background: var(--cream);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .why-text .section-title { margin-bottom: 1rem; }
+    .why-text p { color: var(--ink-light); max-width: 440px; margin-bottom: 2.5rem; }
+
+    .why-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .why-card {
+      background: var(--white);
+      padding: 1.8rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--beige-dark);
+      transition: border-color 0.3s, transform 0.25s, box-shadow 0.25s;
+    }
+    .why-card:hover {
+      border-color: var(--sage-light);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(122,140,110,0.12);
+    }
+    .why-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .why-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: var(--ink);
+    }
+    .why-card p { font-size: 0.85rem; color: var(--ink-light); }
+
+    .why-visual {
+      position: relative;
+    }
+    .why-img-wrap {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--sage-pale);
+    }
+    .why-img-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .why-stat {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--sage);
+      color: var(--white);
+      padding: 1.8rem;
+      width: 160px;
+      text-align: center;
+      border-radius: var(--radius);
+    }
+    .why-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      line-height: 1;
+      display: block;
+    }
+    .why-stat-lbl {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ── ABOUT ── */
+    #apropos { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-frame {
+      background: var(--sage-pale);
+      aspect-ratio: 3/4;
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-deco {
+      position: absolute;
+      top: -20px; left: -20px;
+      width: 140px; height: 140px;
+      border: 1px solid var(--sand);
+      border-radius: 2px;
+      z-index: -1;
+    }
+    .about-text p {
+      color: var(--ink-light);
+      margin-bottom: 1.2rem;
+      font-size: 0.97rem;
+    }
+    .values-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 2rem;
+    }
+    .value-tag {
+      background: var(--sage-pale);
+      color: var(--sage);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      border-radius: 100px;
+      font-weight: 400;
+    }
+
+    /* ── PRODUCTS ── */
+    #produits { background: var(--beige); }
+    .products-header {
+      max-width: 1200px;
+      margin: 0 auto 3.5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .products-header .section-title { margin-bottom: 0; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(201,185,154,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(42,37,32,0.1);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--gold);
+      color: var(--white);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.8rem;
+      border-radius: 100px;
+    }
+
+    .product-img {
+      aspect-ratio: 4/3;
+      background: var(--sage-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .product-body { padding: 1.8rem; }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .product-benefits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.4rem;
+    }
+    .benefit-chip {
+      background: var(--sage-pale);
+      color: var(--sage);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--beige-dark);
+    }
+
+    .product-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .product-price span { font-size: 0.85rem; color: var(--ink-light); font-family: 'Jost', sans-serif; }
+
+    .btn-buy {
+      background: transparent;
+      border: 1px solid var(--sage);
+      color: var(--sage);
+      padding: 0.6rem 1.3rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-buy:hover { background: var(--sage); color: var(--white); }
+
+    /* ── TESTIMONIALS ── */
+    #temoignages { background: var(--ink); }
+    #temoignages .section-label { color: var(--gold-light); }
+    #temoignages .section-title { color: var(--white); }
+
+    .testi-header {
+      max-width: 1200px;
+      margin: 0 auto 3.5rem;
+      text-align: center;
+    }
+    .testi-header p { color: rgba(253,252,250,0.6); max-width: 500px; margin: 0 auto; }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testi-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 2.2rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .testi-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(184,151,90,0.4);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .testi-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(253,252,250,0.85);
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .testi-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .testi-name {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .testi-loc {
+      font-size: 0.72rem;
+      color: rgba(253,252,250,0.4);
+      margin-top: 0.15rem;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .contact-info p {
+      color: var(--ink-light);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-detail-icon {
+      width: 38px; height: 38px;
+      background: var(--sage-pale);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-detail-text strong {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.2rem;
+      font-weight: 400;
+    }
+    .contact-detail-text span { font-size: 0.9rem; color: var(--ink-light); }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .social-link {
+      width: 42px; height: 42px;
+      border: 1px solid var(--beige-dark);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--ink-light);
+      font-size: 1rem;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .social-link:hover { border-color: var(--sage); color: var(--sage); background: var(--sage-pale); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--white);
+      border: 1px solid var(--beige-dark);
+      border-radius: var(--radius);
+      padding: 0.85rem 1.1rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color 0.25s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--sage); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(253,252,250,0.6);
+      padding: 4rem clamp(1.5rem, 5vw, 5rem) 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+    }
+
+    .footer-brand .nav-logo { color: var(--white); display: block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.8; max-width: 260px; }
+
+    .footer-col h5 {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      font-weight: 400;
+      margin-bottom: 1.2rem;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.6rem; }
+    .footer-links a {
+      text-decoration: none;
+      color: rgba(253,252,250,0.5);
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.78rem;
+    }
+    .footer-bottom a { color: rgba(253,252,250,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: var(--white); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--sage);
+      color: var(--white);
+      padding: 1rem 1.8rem;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.4s;
+      z-index: 999;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding-top: 8rem; }
+      .why-grid, .about-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .why-visual { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .products-header { flex-direction: column; align-items: flex-start; }
+      .why-features { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 72px 0 0;
+      background: var(--white);
+      z-index: 99;
+      flex-direction: column;
+      padding: 2rem;
+      gap: 0;
+      border-top: 1px solid var(--beige-dark);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--ink);
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--beige-dark);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">SONA<span>BIO</span></a>
+  <ul class="nav-links">
+    <li><a href="#pourquoi">Pourquoi nous</a></li>
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#produits">Produits</a></li>
+    <li><a href="#temoignages">Avis</a></li>
+    <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#pourquoi" onclick="closeMobileMenu()">Pourquoi nous</a>
+  <a href="#apropos" onclick="closeMobileMenu()">À propos</a>
+  <a href="#produits" onclick="closeMobileMenu()">Produits</a>
+  <a href="#temoignages" onclick="closeMobileMenu()">Témoignages</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">✦ Cosmétique Naturelle d'Exception</p>
+    <h1 class="hero-title">La nature au service<br>de votre <em>beauté</em></h1>
+    <p class="hero-sub">Des soins formulés à partir d'ingrédients naturels soigneusement sélectionnés — pour révéler la beauté authentique qui sommeille en vous.</p>
+    <div class="hero-actions">
+      <a href="#produits" class="btn-primary">Découvrir nos produits</a>
+      <a href="#apropos" class="btn-ghost">Notre histoire <span>→</span></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg"></div>
+    <div class="hero-illustration">
+      <!-- Botanical SVG illustration -->
+      <svg class="botanical" viewBox="0 0 460 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Main stem -->
+        <path d="M230 500 C230 400 220 320 210 240 C200 160 230 100 230 60" stroke="#7a8c6e" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <!-- Large left leaf -->
+        <path d="M210 240 C170 210 120 200 80 170 C110 175 140 185 170 200 C155 170 145 130 150 90 C165 130 175 175 210 240Z" fill="#a5b596" opacity="0.7"/>
+        <!-- Large right leaf -->
+        <path d="M220 200 C260 170 310 160 350 130 C320 140 290 155 265 175 C275 145 280 105 270 65 C260 105 250 150 220 200Z" fill="#7a8c6e" opacity="0.6"/>
+        <!-- Sidr branch left -->
+        <path d="M215 300 C185 280 160 265 130 250" stroke="#7a8c6e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="115" cy="243" rx="28" ry="14" fill="#a5b596" opacity="0.55" transform="rotate(-20 115 243)"/>
+        <ellipse cx="145" cy="260" rx="22" ry="10" fill="#c5d4b8" opacity="0.6" transform="rotate(-15 145 260)"/>
+        <ellipse cx="172" cy="273" rx="18" ry="9" fill="#a5b596" opacity="0.55" transform="rotate(-10 172 273)"/>
+        <!-- Sidr branch right -->
+        <path d="M225 280 C255 260 280 250 315 238" stroke="#7a8c6e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="330" cy="232" rx="28" ry="12" fill="#7a8c6e" opacity="0.55" transform="rotate(20 330 232)"/>
+        <ellipse cx="302" cy="244" rx="22" ry="10" fill="#a5b596" opacity="0.55" transform="rotate(15 302 244)"/>
+        <!-- Small flowers -->
+        <circle cx="230" cy="62" r="12" fill="#d4b882" opacity="0.9"/>
+        <circle cx="230" cy="62" r="6" fill="#b8975a"/>
+        <circle cx="218" cy="52" r="7" fill="#d4b882" opacity="0.7"/>
+        <circle cx="242" cy="52" r="7" fill="#d4b882" opacity="0.7"/>
+        <circle cx="218" cy="72" r="7" fill="#d4b882" opacity="0.7"/>
+        <circle cx="242" cy="72" r="7" fill="#d4b882" opacity="0.7"/>
+        <!-- Small leaves -->
+        <path d="M225 150 C210 140 200 125 205 108 C215 125 225 140 235 145Z" fill="#c5d4b8" opacity="0.65"/>
+        <path d="M235 120 C250 108 265 95 258 78 C248 95 238 110 228 118Z" fill="#a5b596" opacity="0.6"/>
+        <!-- Bottom herbs -->
+        <path d="M230 420 C215 405 195 400 175 390" stroke="#7a8c6e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M230 440 C245 425 265 420 285 408" stroke="#7a8c6e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="165" cy="386" rx="20" ry="9" fill="#a5b596" opacity="0.6" transform="rotate(-15 165 386)"/>
+        <ellipse cx="292" cy="404" rx="20" ry="9" fill="#7a8c6e" opacity="0.55" transform="rotate(18 292 404)"/>
+        <!-- Droplets -->
+        <ellipse cx="180" cy="215" rx="4" ry="6" fill="#7a8c6e" opacity="0.3"/>
+        <ellipse cx="285" cy="195" rx="3" ry="5" fill="#7a8c6e" opacity="0.3"/>
+        <!-- Ground base -->
+        <ellipse cx="230" cy="510" rx="50" ry="8" fill="#a5b596" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <span class="hero-badge-inner">100%</span>
+      <span>Naturel</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Huiles Naturelles</span><span class="dot">✦</span>
+    <span>Sidr Bio</span><span class="dot">✦</span>
+    <span>Sans Paraben</span><span class="dot">✦</span>
+    <span>Vegan & Cruelty Free</span><span class="dot">✦</span>
+    <span>Formulé en France</span><span class="dot">✦</span>
+    <span>Ingrédients d'Exception</span><span class="dot">✦</span>
+    <span>Beauté Naturelle</span><span class="dot">✦</span>
+    <span>Certifié Bio</span><span class="dot">✦</span>
+    <!-- duplicate for loop -->
+    <span>Huiles Naturelles</span><span class="dot">✦</span>
+    <span>Sidr Bio</span><span class="dot">✦</span>
+    <span>Sans Paraben</span><span class="dot">✦</span>
+    <span>Vegan & Cruelty Free</span><span class="dot">✦</span>
+    <span>Formulé en France</span><span class="dot">✦</span>
+    <span>Ingrédients d'Exception</span><span class="dot">✦</span>
+    <span>Beauté Naturelle</span><span class="dot">✦</span>
+    <span>Certifié Bio</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- POURQUOI -->
+<section id="pourquoi">
+  <div class="why-grid">
+    <div class="why-text reveal">
+      <span class="section-label">✦ Pourquoi choisir SONABIO ?</span>
+      <h2 class="section-title">Une philosophie du soin, <em>pas du marketing</em></h2>
+      <p>Chez SONABIO, nous croyons que la nature offre ce qu'il y a de meilleur pour votre peau et vos cheveux. Chaque formule est conçue avec rigueur, sans compromis sur la pureté des ingrédients.</p>
+      <div class="why-features">
+        <div class="why-card">
+          <span class="why-icon">🌿</span>
+          <h4>100% Naturel</h4>
+          <p>Zéro produit chimique, zéro compromis. Uniquement ce que la nature a de plus pur.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🔬</span>
+          <h4>Formulé avec soin</h4>
+          <p>Chaque produit est développé en collaboration avec des experts en cosmétique naturelle.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">♻️</span>
+          <h4>Éco-responsable</h4>
+          <p>Emballages recyclables, approvisionnement éthique, empreinte carbone minimale.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">✨</span>
+          <h4>Résultats visibles</h4>
+          <p>Nos clientes observent une différence après seulement 2 semaines d'utilisation.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal" style="transition-delay: 0.2s">
+      <div class="why-img-wrap">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0">
+          <rect width="400" height="500" fill="#e8ede4"/>
+          <!-- Elegant ingredient illustration -->
+          <circle cx="200" cy="200" r="140" fill="rgba(122,140,110,0.08)"/>
+          <circle cx="200" cy="200" r="100" fill="rgba(122,140,110,0.1)"/>
+          <!-- Olive branch -->
+          <path d="M140 320 C160 280 185 240 200 200 C215 160 235 130 260 100" stroke="#7a8c6e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="155" cy="295" rx="22" ry="10" fill="#a5b596" transform="rotate(-30 155 295)"/>
+          <ellipse cx="168" cy="270" rx="20" ry="9" fill="#7a8c6e" opacity="0.7" transform="rotate(-25 168 270)"/>
+          <ellipse cx="183" cy="248" rx="18" ry="8" fill="#c5d4b8" transform="rotate(-15 183 248)"/>
+          <ellipse cx="198" cy="222" rx="17" ry="8" fill="#a5b596" transform="rotate(-5 198 222)"/>
+          <ellipse cx="214" cy="196" rx="20" ry="9" fill="#7a8c6e" opacity="0.7" transform="rotate(10 214 196)"/>
+          <ellipse cx="228" cy="168" rx="18" ry="8" fill="#c5d4b8" transform="rotate(20 228 168)"/>
+          <ellipse cx="244" cy="142" rx="16" ry="7" fill="#a5b596" transform="rotate(25 244 142)"/>
+          <!-- berries -->
+          <circle cx="148" cy="308" r="6" fill="#b8975a" opacity="0.8"/>
+          <circle cx="176" cy="258" r="5" fill="#b8975a" opacity="0.7"/>
+          <circle cx="208" cy="210" r="5" fill="#b8975a" opacity="0.8"/>
+          <circle cx="238" cy="156" r="4" fill="#b8975a" opacity="0.7"/>
+          <!-- Label style element -->
+          <rect x="80" y="350" width="240" height="80" rx="2" fill="white" opacity="0.8"/>
+          <text x="200" y="378" font-family="Georgia, serif" font-size="16" fill="#2a2520" text-anchor="middle" font-style="italic">Ingrédients purs</text>
+          <text x="200" y="400" font-family="Arial, sans-serif" font-size="9" fill="#7a8c6e" text-anchor="middle" letter-spacing="3">CERTIFIÉS BIOLOGIQUES</text>
+          <line x1="120" y1="388" x2="175" y2="388" stroke="#c9b99a" stroke-width="1"/>
+          <line x1="225" y1="388" x2="280" y2="388" stroke="#c9b99a" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="why-stat">
+        <span class="why-stat-num">98%</span>
+        <span class="why-stat-lbl">Clientes satisfaites</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="apropos">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-frame">
+        <svg viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg" style="width:85%;height:85%">
+          <rect width="320" height="420" fill="#e8ede4"/>
+          <!-- Jar illustration -->
+          <rect x="90" y="200" width="140" height="110" rx="8" fill="#fdfcfa"/>
+          <rect x="90" y="200" width="140" height="35" rx="8" fill="#7a8c6e"/>
+          <text x="160" y="222" font-family="Georgia,serif" font-size="11" fill="white" text-anchor="middle" letter-spacing="2">SONABIO</text>
+          <text x="160" y="260" font-family="Georgia,serif" font-size="9" fill="#5a5248" text-anchor="middle" font-style="italic">Sérum Sidr</text>
+          <rect x="105" y="270" width="110" height="1" fill="#c9b99a" opacity="0.5"/>
+          <text x="160" y="292" font-family="Arial,sans-serif" font-size="7.5" fill="#7a8c6e" text-anchor="middle" letter-spacing="1.5">NATUREL & BIO</text>
+          <!-- Cap -->
+          <rect x="100" y="190" width="120" height="16" rx="4" fill="#c9b99a"/>
+          <!-- Decorative plants around jar -->
+          <path d="M85 320 C70 300 60 270 75 240" stroke="#a5b596" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="68" cy="262" rx="18" ry="8" fill="#c5d4b8" transform="rotate(-40 68 262)"/>
+          <ellipse cx="72" cy="248" rx="16" ry="7" fill="#a5b596" transform="rotate(-35 72 248)"/>
+          <path d="M235 320 C250 300 260 270 248 240" stroke="#a5b596" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="255" cy="258" rx="17" ry="7" fill="#c5d4b8" transform="rotate(40 255 258)"/>
+          <ellipse cx="251" cy="244" rx="15" ry="7" fill="#a5b596" transform="rotate(35 251 244)"/>
+          <!-- Top leaves -->
+          <path d="M160 80 C140 50 115 45 100 30 C120 38 140 48 155 65Z" fill="#7a8c6e" opacity="0.65"/>
+          <path d="M160 80 C180 50 205 45 220 30 C200 38 180 48 165 65Z" fill="#a5b596" opacity="0.65"/>
+          <path d="M160 80 C155 55 160 40 160 20" stroke="#7a8c6e" stroke-width="2" fill="none"/>
+          <circle cx="160" cy="20" r="8" fill="#b8975a" opacity="0.8"/>
+          <!-- Bottom inscription -->
+          <text x="160" y="390" font-family="Georgia,serif" font-size="10" fill="#7a8c6e" text-anchor="middle" font-style="italic">— depuis 2018 —</text>
+        </svg>
+      </div>
+      <div class="about-deco"></div>
+    </div>
+    <div class="about-text reveal" style="transition-delay:0.15s">
+      <span class="section-label">✦ Notre histoire</span>
+      <h2 class="section-title">Née d'une passion pour la <em>nature authentique</em></h2>
+      <p>SONABIO est née en 2018 d'une conviction profonde : la nature, seule, possède les clés d'une beauté durable. Fondée par Sona, herboriste passionnée et diplômée en phytothérapie, la marque puise ses racines dans un héritage familial de soins ancestraux transmis de génération en génération.</p>
+      <p>Lassée par une industrie cosmétique inondée de formules chimiques aux promesses creuses, Sona a choisi de revenir à l'essentiel — des ingrédients purs, des rituels de soin éprouvés, et un respect absolu pour votre peau et pour la planète.</p>
+      <p>Aujourd'hui, SONABIO propose une gamme de soins d'exception, élaborés à partir de plantes sauvages, d'huiles vierges et d'extraits végétaux certifiés bio, pour vous offrir ce que la nature a de plus précieux.</p>
+      <div class="values-list">
+        <span class="value-tag">🌿 100% Naturel</span>
+        <span class="value-tag">💚 Bio certifié</span>
+        <span class="value-tag">✦ Sans paraben</span>
+        <span class="value-tag">🐰 Cruelty free</span>
+        <span class="value-tag">♻️ Éco-responsable</span>
+        <span class="value-tag">🌍 Bien-être holistique</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="produits">
+  <div class="products-header reveal">
+    <div>
+      <span class="section-label">✦ Notre collection</span>
+      <h2 class="section-title">Des soins <em>d'exception</em></h2>
+    </div>
+    <a href="#contact" class="btn-primary">Voir toute la gamme</a>
+  </div>
+
+  <div class="products-grid">
+    <!-- P1 -->
+    <div class="product-card reveal">
+      <div class="product-badge">Bestseller</div>
+      <div class="product-img">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="280" height="200" fill="#e8ede4"/>
+          <rect x="95" y="60" width="90" height="110" rx="6" fill="#fdfcfa"/>
+          <rect x="95" y="60" width="90" height="30" rx="6" fill="#7a8c6e"/>
+          <text x="140" y="79" font-family="Georgia,serif" font-size="9" fill="white" text-anchor="middle" letter-spacing="1.5">SONABIO</text>
+          <text x="140" y="108" font-family="Georgia,serif" font-size="8" fill="#5a5248" text-anchor="middle" font-style="italic">Huile de Sidr</text>
+          <rect x="108" y="116" width="64" height="0.8" fill="#c9b99a"/>
+          <text x="140" y="133" font-family="Arial,sans-serif" font-size="6" fill="#7a8c6e" text-anchor="middle" letter-spacing="1">SOIN CHEVEUX</text>
+          <rect x="108" y="95" width="64" height="10" rx="3" fill="#c9b99a" opacity="0.5"/>
+          <path d="M60 150 C50 130 55 105 70 95" stroke="#a5b596" stroke-width="1.5" fill="none"/>
+          <ellipse cx="58" cy="118" rx="14" ry="6" fill="#c5d4b8" transform="rotate(-35 58 118)"/>
+          <path d="M220 150 C230 130 225 105 210 95" stroke="#a5b596" stroke-width="1.5" fill="none"/>
+          <ellipse cx="222" cy="118" rx="14" ry="6" fill="#c5d4b8" transform="rotate(35 222 118)"/>
+        </svg>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Huile Précieuse de Sidr</h3>
+        <p class="product-desc">Issue des feuilles de jujubier séchées et pressées à froid, cette huile ancestrale nourrit, renforce et embellit vos cheveux en profondeur.</p>
+        <div class="product-benefits">
+          <span class="benefit-chip">Nourrit en profondeur</span>
+          <span class="benefit-chip">Anti-casse</span>
+          <span class="benefit-chip">Éclat & brillance</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">34,90€ <span>/ 100ml</span></div>
+          <button class="btn-buy" onclick="showToast('Huile de Sidr ajoutée au panier !')">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="product-card reveal" style="transition-delay:0.1s">
+      <div class="product-img">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="280" height="200" fill="#f0ece4"/>
+          <rect x="108" y="70" width="64" height="98" rx="30" fill="#fdfcfa"/>
+          <rect x="108" y="70" width="64" height="25" rx="12" fill="#a5b596"/>
+          <text x="140" y="86" font-family="Arial,sans-serif" font-size="6.5" fill="white" text-anchor="middle" letter-spacing="1">SONABIO</text>
+          <text x="140" y="120" font-family="Georgia,serif" font-size="7.5" fill="#5a5248" text-anchor="middle" font-style="italic">Sérum Argan</text>
+          <text x="140" y="138" font-family="Arial,sans-serif" font-size="5.5" fill="#7a8c6e" text-anchor="middle" letter-spacing="1">VISAGE</text>
+          <circle cx="140" cy="152" r="5" fill="#c9b99a" opacity="0.6"/>
+          <path d="M75 145 C65 125 68 100 80 85" stroke="#a5b596" stroke-width="1.5" fill="none"/>
+          <ellipse cx="72" cy="115" rx="14" ry="6" fill="#c5d4b8" transform="rotate(-30 72 115)"/>
+          <ellipse cx="76" cy="100" rx="12" ry="5" fill="#a5b596" transform="rotate(-25 76 100)"/>
+          <path d="M205 145 C215 125 212 100 200 85" stroke="#a5b596" stroke-width="1.5" fill="none"/>
+          <ellipse cx="208" cy="115" rx="14" ry="6" fill="#c5d4b8" transform="rotate(30 208 115)"/>
+        </svg>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Sérum Visage à l'Argan</h3>
+        <p class="product-desc">Formulé avec de l'huile d'argan pure du Maroc, ce sérum régénère, illumine et protège votre peau contre le vieillissement prématuré.</p>
+        <div class="product-benefits">
+          <span class="benefit-chip">Anti-âge</span>
+          <span class="benefit-chip">Luminosité</span>
+          <span class="benefit-chip">Hydratation 24h</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">42,00€ <span>/ 30ml</span></div>
+          <button class="btn-buy" onclick="showToast('Sérum Argan ajouté au panier !')">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="product-card reveal" style="transition-delay:0.2s">
+      <div class="product-badge" style="background: var(--sage)">Nouveau</div>
+      <div class="product-img">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="280" height="200" fill="#ede8e0"/>
+          <!-- Pot round -->
+          <ellipse cx="140" cy="80" rx="55" ry="18" fill="#e8ddd0"/>
+          <rect x="85" y="78" width="110" height="80" rx="4" fill="#fdfcfa"/>
+          <ellipse cx="140" cy="78" rx="55" ry="18" fill="#c9b99a"/>
+          <text x="140" y="122" font-family="Georgia,serif" font-size="9" fill="#5a5248" text-anchor="middle" font-style="italic">Beurre de Karité</text>
+          <text x="140" y="138" font-family="Arial,sans-serif" font-size="5.5" fill="#7a8c6e" text-anchor="middle" letter-spacing="1.2">CORPS & VISAGE</text>
+          <text x="140" y="100" font-family="Arial,sans-serif" font-size="6" fill="#a5b596" text-anchor="middle" letter-spacing="1.5">SONABIO</text>
+          <path d="M55 160 C45 140 50 115 65 100" stroke="#a5b596" stroke-width="1.5" fill="none"/>
+          <ellipse cx="52" cy="130" rx="15" ry="6" fill="#c5d4b8" transform="rotate(-35 52 130)"/>
+          <path d="M225 160 C235 140 230 115 215 100" stroke="#a5b596" stroke-width="1.5" fill="none"/>
+          <ellipse cx="228" cy="130" rx="15" ry="6" fill="#c5d4b8" transform="rotate(35 228 130)"/>
+        </svg>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Beurre Karité Corps & Visage</h3>
+        <p class="product-desc">Un beurre de karité pur et non raffiné, récolté au Burkina Faso, pour une hydratation intense et durable de la peau la plus sèche.</p>
+        <div class="product-benefits">
+          <span class="benefit-chip">Très nourrissant</span>
+          <span class="benefit-chip">Peaux sèches</span>
+          <span class="benefit-chip">Apaise & répare</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">22,50€ <span>/ 200g</span></div>
+          <button class="btn-buy" onclick="showToast('Beurre Karité ajouté au panier !')">Acheter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="product-card reveal" style="transition-delay:0.3s">
+      <div class="product-img">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="280" height="200" fill="#e4ebe8"/>
+          <!-- Tube -->
+          <rect x="115" y="55" width="50" height="120" rx="6" fill="#fdfcfa"/>
+          <rect x="115" y="55" width="50" height="35" rx="6" fill="#2a2520"/>
+          <text x="140" y="76" font-family="Arial,sans-serif" font-size="5.5" fill="white" text-anchor="middle" letter-spacing="1.5">SONABIO</text>
+          <rect x="122" y="97" width="36" height="0.8" fill="#c9b99a"/>
+          <rect x="122" y="100" width="36" height="0.8" fill="#c9b99a"/>
+          <text x="140" y="120" font-family="Georgia,serif" font-size="7.5" fill="#5a5248" text-anchor="middle" font-style="italic">Masque Nigelle</text>
+          <text x="140" y="140" font-family="Arial,sans-serif" font-size="5.5" fill="#7a8c6e" text-anchor="middle" letter-spacing="0.8">SOIN HEBDOMADAIRE</text>
+          <ellipse cx="140" cy="175" rx="12" ry="4" fill="#2a2520" opacity="0.6" transform="rotate(0)"/>
+          <rect x="136" y="170" width="8" height="6" rx="2" fill="#2a2520"/>
+          <!-- leaves -->
+          <path d="M70 130 C55 110 60 85 75 70" stroke="#7a8c6e" stroke-width="1.5" fill="none"/>
+          <ellipse cx="63" cy="98" rx="16" ry="7" fill="#a5b596" transform="rotate(-35 63 98)"/>
+          <path d="M210 130 C225 110 220 85 205 70" stroke="#7a8c6e" stroke-width="1.5" fill="none"/>
+          <ellipse cx="217" cy="98" rx="16" ry="7" fill="#a5b596" transform="rotate(35 217 98)"/>
+        </svg>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Masque Cheveux à la Nigelle</h3>
+        <p class="product-desc">Enrichi d'huile de nigelle et d'extraits de henné, ce masque revitalisant redonne force, volume et souplesse aux cheveux fragilisés.</p>
+        <div class="product-benefits">
+          <span class="benefit-chip">Revitalisante</span>
+          <span class="benefit-chip">Stimule la pousse</span>
+          <span class="benefit-chip">Anti-pelliculaire</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">28,00€ <span>/ 150ml</span></div>
+          <button class="btn-buy" onclick="showToast('Masque Nigelle ajouté au panier !')">Acheter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="temoignages">
+  <div class="testi-header reveal">
+    <span class="section-label">✦ Témoignages</span>
+    <h2 class="section-title">Ce que disent <em>nos clientes</em></h2>
+    <p>Des milliers de femmes font déjà confiance à SONABIO pour sublimer leur beauté naturelle.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">« L'huile de Sidr a littéralement transformé mes cheveux en trois semaines. Plus forts, plus brillants, et enfin de la longueur ! Je ne retournerai jamais aux produits classiques. »</p>
+      <div class="testi-author">
+        <div class="testi-avatar">N</div>
+        <div>
+          <div class="testi-name">Nadia B.</div>
+          <div class="testi-loc">Lyon, France</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.1s">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">« Le sérum à l'Argan est une révélation. Ma peau est visiblement plus lumineuse et les taches de grossesse s'estompent progressivement. Un produit d'une qualité rare. »</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--sand-deep)">S</div>
+        <div>
+          <div class="testi-name">Soraya K.</div>
+          <div class="testi-loc">Paris, France</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.2s">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">« J'ai une peau très sensible qui réagit à tout. SONABIO est la seule marque qui n'irrite pas ma peau. Le beurre de karité est devenu indispensable dans ma routine. »</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--gold)">A</div>
+        <div>
+          <div class="testi-name">Amina L.</div>
+          <div class="testi-loc">Bordeaux, France</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <span class="section-label">✦ Nous contacter</span>
+      <h2 class="section-title">Parlons de votre <em>beauté</em></h2>
+      <p>Une question sur nos produits ? Un conseil personnalisé ? Notre équipe est là pour vous guider vers le soin parfait pour votre type de peau ou de cheveux.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <strong>Adresse</strong>
+          <span>12 Rue des Botanistes, 75011 Paris</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📧</div>
+        <div class="contact-detail-text">
+          <strong>Email</strong>
+          <span>contact@sonabio.fr</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-text">
+          <strong>Téléphone</strong>
+          <span>+33 (0)1 42 00 00 00</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Pinterest">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 20l4-9M12 2C6.477 2 2 6.477 2 12a10 10 0 0 0 6.51 9.38c-.1-.94-.2-2.38.04-3.4l1.36-5.75s-.35-.7-.35-1.73c0-1.62.94-2.83 2.1-2.83 1 0 1.47.74 1.47 1.64 0 1-.64 2.5-.97 3.88-.27 1.16.57 2.1 1.7 2.1 2.03 0 3.6-2.14 3.6-5.23 0-2.73-1.96-4.64-4.77-4.64-3.25 0-5.16 2.44-5.16 4.96 0 .98.38 2.04.85 2.61.1.11.1.21.08.32l-.32 1.27c-.05.2-.17.25-.38.15C6.05 16.3 5 14.2 5 12.4 5 9.04 7.45 6 12.3 6c4.01 0 6.7 2.9 6.7 6.02 0 3.96-2.22 7.15-5.44 7.15-1.05 0-2.05-.55-2.4-1.2l-.64 2.48"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="reveal" style="transition-delay:0.15s">
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" placeholder="Votre prénom" />
+          </div>
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" placeholder="Votre nom" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="vous@exemple.com" />
+        </div>
+        <div class="form-group">
+          <label for="sujet">Sujet</label>
+          <select id="sujet">
+            <option value="">Choisir un sujet...</option>
+            <option>Question sur un produit</option>
+            <option>Conseil personnalisé</option>
+            <option>Commande / Livraison</option>
+            <option>Partenariat</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Dites-nous comment nous pouvons vous aider..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;" onclick="submitForm()">
+          Envoyer le message →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">SONA<span style="color:var(--sage-light)">BIO</span></a>
+      <p>La nature au service de votre beauté. Des soins d'exception, formulés avec les meilleurs ingrédients naturels et biologiques.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigation</h5>
+      <ul class="footer-links">
+        <li><a href="#hero">Accueil</a></li>
+        <li><a href="#pourquoi">Pourquoi nous</a></li>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#produits">Produits</a></li>
+        <li><a href="#temoignages">Témoignages</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Produits</h5>
+      <ul class="footer-links">
+        <li><a href="#produits">Huile de Sidr</a></li>
+        <li><a href="#produits">Sérum Argan</a></li>
+        <li><a href="#produits">Beurre Karité</a></li>
+        <li><a href="#produits">Masque Nigelle</a></li>
+        <li><a href="#produits">Nouveautés</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Informations</h5>
+      <ul class="footer-links">
+        <li><a href="#">Livraison & Retours</a></li>
+        <li><a href="#">CGV</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SONABIO. Tous droits réservés.</span>
+    <span>Fait avec 🌿 pour votre beauté naturelle</span>
+    <div style="display:flex;gap:1.5rem">
+      <a href="#">CGV</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Mentions légales</a>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Produit ajouté au panier</div>
+
+<script>
+  // Navbar scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // Intersection observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = '✓ ' + msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // Form submit
+  function submitForm() {
+    const email = document.getElementById('email').value;
+    if (!email) {
+      alert('Veuillez renseigner votre email.');
+      return;
+    }
+    showToast('Votre message a bien été envoyé !');
+    document.querySelectorAll('.contact-form input, .contact-form textarea, .contact-form select')
+      .forEach(el => el.value = '');
+  }
+
+  // Smooth active nav link highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--ink)' : '';
+    });
+  });
+</script>
+</body>
+</html>
